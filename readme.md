@@ -1,1 +1,1 @@
-In this project we will try to make a document scanner 
+Work only for white paper (A4) on more or less constrast background
