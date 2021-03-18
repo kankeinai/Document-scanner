@@ -28,8 +28,6 @@ for pictures in os.listdir(my_dir):
         edged = cv2.Canny(gray, 75, 200)
         # show the original image and the edge detected image
         print("STEP 1: Edge Detection")
-        cv2.imshow("Image", image)
-        cv2.imshow("Edged", edged)
         # find the contours in the edged image, keeping only the
         # largest ones, and initialize the screen contour
         cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
@@ -47,9 +45,6 @@ for pictures in os.listdir(my_dir):
                 break
         # show the contour (outline) of the piece of paper
         print("STEP 2: Find contours of paper")
-        cv2.drawContours(image, [screenCnt], -1, (0, 255, 0), 2)
-        cv2.imshow("Outline", image)
-
         # apply the four point transform to obtain a top-down
         # view of the original image
         warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
