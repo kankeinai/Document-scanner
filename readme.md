@@ -1,4 +1,4 @@
-Work only for white paper (A4) with more or less constrast background.
+Works only for white paper (A4) with more or less constrast background.
 
 – converter.py converts .heic images to .jpg 
 – usage: python converter.py dir_name
