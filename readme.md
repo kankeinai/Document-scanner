@@ -8,3 +8,12 @@ Works only for white paper (A4) with more or less constrast background.
 
 Before usage create virtual environment and install needed libraries: img2pdf, imutils, pyheif (for converter), cv2, skimage
 
+Example:
+<div>
+  <div width="50%">
+    <img src="https://user-images.githubusercontent.com/56974757/111684968-921c7880-8851-11eb-9fbf-8d37ca730fca.png" height="500">
+  </div>
+  <div width="50%">
+    <img src="https://user-images.githubusercontent.com/56974757/111685045-a95b6600-8851-11eb-94a0-16cf0e9da3fe.png" height="500">
+  </div>
+</div>
