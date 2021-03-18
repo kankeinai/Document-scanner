@@ -20,19 +20,21 @@ for pictures in os.listdir(my_dir):
         image = cv2.imread(way)
         ratio = image.shape[0] / 2000.0
         orig = image.copy()
+        
         image = imutils.resize(image, height=2000)
         # convert the image to grayscale, blur it, and find edges
         # in the image
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (5, 5), 0)
         edged = cv2.Canny(gray, 75, 200)
-        # show the original image and the edge detected image
         print("STEP 1: Edge Detection")
+        
         # find the contours in the edged image, keeping only the
         # largest ones, and initialize the screen contour
         cnts = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
         cnts = imutils.grab_contours(cnts)
         cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
+        
         # loop over the contours
         for c in cnts:
             # approximate the contour
@@ -43,21 +45,18 @@ for pictures in os.listdir(my_dir):
             if len(approx) == 4:
                 screenCnt = approx
                 break
-        # show the contour (outline) of the piece of paper
         print("STEP 2: Find contours of paper")
+        
         # apply the four point transform to obtain a top-down
-        # view of the original image
         warped = four_point_transform(orig, screenCnt.reshape(4, 2) * ratio)
         # convert the warped image to grayscale, then threshold it
         # to give it that 'black and white' paper effect
         warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
         T = threshold_local(warped, 15, offset=15, method="gaussian")
         warped = (warped > T).astype("uint8") * 255
-        # show the original and scanned images
-        alpha = 2  # Contrast control (1.0-3.0)
-        beta = 0  # Brightness control (0-100)
-        adjusted = cv2.convertScaleAbs(warped, alpha=alpha, beta=beta)
+        adjusted = cv2.convertScaleAbs(warped, alpha=2, beta=0)
         print("STEP 3: Apply perspective transform")
+        
         new_way = "scanned/" + "scanned_" + pictures
         cv2.imwrite(new_way, imutils.resize(adjusted, height=2000))
         my_images.append(new_way)
